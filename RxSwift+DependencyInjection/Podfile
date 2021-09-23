@@ -8,4 +8,6 @@ target 'RxSwift+DependencyInjection' do
   # Pods for RxSwift+DependencyInjection
 
   pod 'RxSwift', '~> 6.2.0'
+  pod 'RxCocoa', '~> 6.2.0'
+
 end
