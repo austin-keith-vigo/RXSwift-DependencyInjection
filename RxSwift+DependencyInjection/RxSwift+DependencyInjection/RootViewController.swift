@@ -24,19 +24,31 @@ class RootViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         self.tableView.register(UINib(nibName: cellId, bundle: nil), forCellReuseIdentifier: cellId)
+        
         self.bindTableData()
     }
     
     func bindTableData() {
         
-        //Bind items to table
         viewModel.books
             .bind(to: tableView.rx.items(cellIdentifier: cellId,  cellType: TitleDescriptionTableViewCell.self)) { row, model, cell in
                 cell.setup(title: model.title, descr: model.author)
             }
             .disposed(by: bag)
+
+        tableView.rx.modelSelected(BookModel.self)
+            .bind { [weak self] book in
+                let this = self
+                this?.displayModelDetailView(model: book)
+            }
+            .disposed(by: bag)
         
-        // fetch items
         viewModel.fetchItems()
+    }
+    
+    func displayModelDetailView(model: BookModel) {
+        
+        print("displayModelDetailView")
+        
     }
 }
